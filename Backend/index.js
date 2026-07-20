@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 const app = express();
@@ -13,6 +14,8 @@ connectDB();
 app.use(cors()); //middleware for cross-origin requests
 app.use(express.json()); //middleware for parsing JSON request bodies
 app.use("/api/users", userRoutes); //middleware for user routes
+app.use(notFound); //middleware for handling 404 errors
+app.use(errorHandler); //middleware for error handling
 
 const PORT = process.env.PORT || 3000;
 
