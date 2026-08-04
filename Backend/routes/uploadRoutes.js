@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { protect, admin } from "../middleware/authMiddleware.js";
 
 dotenv.config();
 
@@ -38,7 +39,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage });
 
 // 3. Upload Endpoint
-router.post("/", (req, res, next) => {
+router.post("/", protect, admin, (req, res, next) => {
   upload.fields([
     { name: "image", maxCount: 1 },
     { name: "file", maxCount: 1 },
