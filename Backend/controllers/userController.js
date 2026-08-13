@@ -15,7 +15,7 @@ export const registerUser = async (req, res, next) => {
       name,
       email,
       password,
-      role, // REMEMBER : change role:"customer" before deploying to production, this is just for testing purposes
+      role: "customer",
     });
 
     if (user) {
