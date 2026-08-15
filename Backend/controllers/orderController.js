@@ -71,3 +71,29 @@ export const addOrderItems = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getOrderById = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id).populate(
+      "user",
+      "name email",
+    );
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getMyOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find({ user: req.user._id });
+    res.json(orders);
+  } catch (error) {
+    next(error);
+  }
+};
